@@ -60,6 +60,7 @@ public class GameScene implements Scene {
         if (snake.intersects(foodItem)) {
             snake.addBodyPart();
             points++;
+            drawables.remove(foodItem);
             generateFood();
         }
 
