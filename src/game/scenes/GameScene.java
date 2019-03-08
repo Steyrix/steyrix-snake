@@ -18,6 +18,7 @@ public class GameScene implements Scene {
 
     private final ArrayList<Drawable> drawables;
 
+    private SceneState currState;
     private final Snake snake;
     private SnakeFood foodItem;
     private String pointStr;
@@ -35,7 +36,7 @@ public class GameScene implements Scene {
 
     @Override
     public void init() {
-
+        currState = SceneState.STATIC;
         points = 0;
         pointStr = "(ESC to pause) Points: ";
         generateFood();
@@ -66,6 +67,7 @@ public class GameScene implements Scene {
         if (snake.intersects(snake)) {
             snake.setDeathClr();
             snake.stop();
+            currState = SceneState.READY_TO_CHANGE;
         }
 
         if (snake.getPosition().x >= PANEL_WIDTH
@@ -74,15 +76,20 @@ public class GameScene implements Scene {
                 || snake.getPosition().y <= 0 - snake.getHeight()) {
             snake.setDeathClr();
             snake.stop();
+            currState = SceneState.READY_TO_CHANGE;
         }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            pointStr = "(Paused. ENTER to resume / ESC to exit) Points: ";
-            snake.stop();
-            dir = snake.getCurrDir();
+            if (previousKeyCode == KeyEvent.VK_ESCAPE) {
+                currState = SceneState.READY_TO_CHANGE;
+            } else {
+                pointStr = "(Paused. ENTER to resume / ESC to exit) Points: ";
+                snake.stop();
+                dir = snake.getCurrDir();
+            }
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             if (previousKeyCode == KeyEvent.VK_ESCAPE) {
                 pointStr = "(ESC to pause) Points: ";
