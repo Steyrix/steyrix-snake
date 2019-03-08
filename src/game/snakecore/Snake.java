@@ -1,13 +1,13 @@
 package game.snakecore;
 
+import game.BoundingBoxed;
 import game.Drawable;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 
-public class Snake implements Drawable {
-
+public class Snake implements Drawable, BoundingBoxed {
     public enum Direction {
         UP,
         DOWN,
@@ -15,7 +15,7 @@ public class Snake implements Drawable {
         LEFT,
     }
 
-    private final LinkedList<Drawable> bodyParts;
+    private final LinkedList<SnakeBodyPart> bodyParts;
     private Point position;
     private Point posToAdd;
     private Direction currDir;
@@ -131,16 +131,15 @@ public class Snake implements Drawable {
 
     public void moveSnake() {
         if (!stopped) {
-            position.x += dx * SnakeBodyPart.SNAKE_PART_SIZE;
-            position.y += dy * SnakeBodyPart.SNAKE_PART_SIZE;
+            updatePosition();
 
             Point prevPos = bodyParts.getFirst().getPosition();
             bodyParts.getFirst().setPosition(new Point(position));
 
-            for (Drawable dObject : bodyParts) {
-                if (dObject != bodyParts.getFirst()) {
-                    Point temp = dObject.getPosition();
-                    dObject.setPosition(prevPos);
+            for (SnakeBodyPart part : bodyParts) {
+                if (part != bodyParts.getFirst()) {
+                    Point temp = part.getPosition();
+                    part.setPosition(prevPos);
                     prevPos = temp;
                 }
             }
@@ -149,9 +148,9 @@ public class Snake implements Drawable {
         }
     }
 
-    @Override
-    public Image getImage() {
-        return null;
+    private void updatePosition() {
+        position.x += dx * SnakeBodyPart.PART_SIZE;
+        position.y += dy * SnakeBodyPart.PART_SIZE;
     }
 
     @Override
@@ -175,9 +174,9 @@ public class Snake implements Drawable {
     }
 
     @Override
-    public boolean intersects(Drawable another) {
-        for (Drawable dObj : bodyParts) {
-            if (another.intersects(dObj)) {
+    public boolean intersects(BoundingBoxed another) {
+        for (SnakeBodyPart part : bodyParts) {
+            if (another.intersects(part)) {
                 return true;
             }
         }
@@ -195,9 +194,9 @@ public class Snake implements Drawable {
         int diffX = getPosition().x - newPos.x;
         int diffY = getPosition().y - newPos.y;
 
-        for (Drawable dObject : bodyParts) {
-            Point prevPos = dObject.getPosition();
-            dObject.setPosition(new Point(prevPos.x + diffX, prevPos.y + diffY));
+        for (SnakeBodyPart part : bodyParts) {
+            Point prevPos = part.getPosition();
+            part.setPosition(new Point(prevPos.x + diffX, prevPos.y + diffY));
         }
     }
 

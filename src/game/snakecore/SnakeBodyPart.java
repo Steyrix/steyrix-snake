@@ -1,14 +1,13 @@
 package game.snakecore;
 
+import game.BoundingBoxed;
 import game.Drawable;
 
 import java.awt.*;
 
-public class SnakeBodyPart implements Drawable {
+public class SnakeBodyPart implements Drawable, BoundingBoxed {
 
-    public static int SNAKE_PART_SIZE = 50;
-    private final int width = 50;
-    private final int height = 50;
+    public static final int PART_SIZE = 50;
     private int x;
     private int y;
 
@@ -30,29 +29,24 @@ public class SnakeBodyPart implements Drawable {
 
     @Override
     public Dimension getSize() {
-        return new Dimension(width, height);
+        return new Dimension(PART_SIZE, PART_SIZE);
     }
 
     @Override
     public int getWidth(){
-        return width;
+        return PART_SIZE;
     }
 
     @Override
     public int getHeight(){
-        return height;
+        return PART_SIZE;
     }
 
     @Override
-    public Image getImage() {
-        return null;
-    }
-
-    @Override
-    public boolean intersects(Drawable another) {
+    public boolean intersects(BoundingBoxed another) {
         Point anotherPos = another.getPosition();
-        return Math.abs(anotherPos.x - x) < width &&
-                Math.abs(anotherPos.y - y) < height && another != this;
+        return Math.abs(anotherPos.x - x) < PART_SIZE &&
+                Math.abs(anotherPos.y - y) < PART_SIZE && another != this;
     }
 
     @Override
@@ -67,10 +61,14 @@ public class SnakeBodyPart implements Drawable {
 
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.drawRect(x, y, width, height);
-        g2d.fillRect(x, y, width, height);
+
+        final int posScale = 5;
+        final int partSizeScale = -10;
+
+        g2d.drawRect(x, y, PART_SIZE, PART_SIZE);
+        g2d.fillRect(x, y, PART_SIZE, PART_SIZE);
         g2d.setColor(Color.BLACK);
-        g2d.drawRect(x, y, width, height);
-        g2d.drawRect(x + 5, y + 5, width - 10, height - 10);
+        g2d.drawRect(x, y, PART_SIZE, PART_SIZE);
+        g2d.drawRect(x + posScale, y + posScale, PART_SIZE + partSizeScale, PART_SIZE + partSizeScale);
     }
 }
