@@ -3,6 +3,7 @@ package game;
 import java.awt.*;
 
 public interface BoundingBoxed {
+
     Point getPosition();
 
     Dimension getSize();

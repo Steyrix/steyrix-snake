@@ -170,7 +170,7 @@ public class Snake implements Drawable, BoundingBoxed {
 
     @Override
     public int getHeight() {
-        return bodyParts.getFirst().getHeight() * bodyParts.size();
+        return bodyParts.getFirst().getHeight();
     }
 
     @Override

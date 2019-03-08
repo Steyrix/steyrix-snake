@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class SnakeBodyPart implements Drawable, BoundingBoxed {
 
-    public static final int PART_SIZE = 50;
+    static final int PART_SIZE = 50;
     private int x;
     private int y;
 
