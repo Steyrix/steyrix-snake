@@ -3,7 +3,7 @@ import java.io.IOException;
 
 public class SnakeApp extends JFrame {
 
-    public SnakeApp() {
+    SnakeApp() {
         try {
             initUI();
         } catch (IOException e) {
