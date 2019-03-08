@@ -11,28 +11,20 @@ import java.io.IOException;
 public class PlayPanel extends JPanel implements ActionListener {
 
     private Scene currScene;
-    private Timer timer;
     private int delays;
     private boolean sceneChanged;
 
-    private final int DELAY = 450;
-    private final int delaysToWait = 3;
-
     public PlayPanel() throws IOException {
-        initPlayPanel();
-    }
-
-    private void initPlayPanel() throws IOException {
-
+        sceneChanged = false;
         addKeyListener(new TAdapter());
         setFocusable(true);
 
         delays = 0;
-        sceneChanged = false;
         currScene = new GameScene();
-        timer = new Timer(DELAY, this);
-        timer.start();
+        final int DELAY = 450;
 
+        final Timer timer = new Timer(DELAY, this);
+        timer.start();
     }
 
     @Override
@@ -52,17 +44,23 @@ public class PlayPanel extends JPanel implements ActionListener {
             if(currScene instanceof GameScene) {
                 int pts = ((GameScene) currScene).getPoints();
                 delays++;
+                int delaysToWait = 3;
+
                 if(delays == delaysToWait) {
                     currScene = new MenuScene(pts);
                     currScene.addUiComponents(this);
+
                     sceneChanged = true;
+
                     delays = 0;
                 }
             }
-            if(currScene instanceof Menu && !sceneChanged){
+
+            if(currScene instanceof MenuScene && !sceneChanged) {
                 removeUi();
                 currScene = new GameScene();
             }
+
             sceneChanged = false;
         }
 
