@@ -16,15 +16,15 @@ public class GameScene implements Scene {
     private static final int PANEL_HEIGHT = 500;
 
     private final ArrayList<Drawable> drawables;
+    private final Snake snake;
 
     private SceneState currState;
-    private final Snake snake;
     private SnakeFood foodItem;
     private String pointStr;
     private Snake.Direction dir;
+
     private int previousKeyCode;
     private int points;
-    private final int squareSize = 50;
 
     public GameScene() {
         drawables = new ArrayList<>();
@@ -39,12 +39,6 @@ public class GameScene implements Scene {
         points = 0;
         pointStr = "(ESC to pause) Points: ";
         generateFood();
-    }
-
-    private void renderDrawables(Graphics g) {
-        for (Drawable dObj : drawables) {
-            dObj.draw((Graphics2D) g);
-        }
     }
 
     @Override
@@ -86,12 +80,14 @@ public class GameScene implements Scene {
             if (previousKeyCode == KeyEvent.VK_ESCAPE) {
                 currState = SceneState.READY_TO_CHANGE;
             } else {
+                currState = SceneState.PAUSE;
                 pointStr = "(Paused. ENTER to resume / ESC to exit) Points: ";
                 snake.stop();
                 dir = snake.getCurrDir();
             }
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             if (previousKeyCode == KeyEvent.VK_ESCAPE) {
+                currState = SceneState.STATIC;
                 pointStr = "(ESC to pause) Points: ";
                 snake.resume(dir);
             }
@@ -116,12 +112,15 @@ public class GameScene implements Scene {
         return currState;
     }
 
-    private void drawObject(Graphics g, Drawable dObject) {
-        Graphics2D g2d = (Graphics2D) g;
-        dObject.draw(g2d);
+    public int getPoints() {
+        return points;
     }
-
+    
     private void drawPlayField(Graphics g) {
+
+        final int textPosX = 0;
+        final int textPosY = 520;
+
         Graphics2D g2d = (Graphics2D) g;
 
         g2d.setColor(Color.BLACK);
@@ -131,25 +130,33 @@ public class GameScene implements Scene {
         for (int i = 0; i <= PANEL_HEIGHT; i += snake.getHeight())
             g2d.drawLine(i, 0, i, PANEL_HEIGHT);
 
-        g2d.drawString(pointStr + points, 0, 520);
+        g2d.drawString(pointStr + points, textPosX, textPosY);
     }
 
     private void generateFood() {
         SnakeFood temp;
         while (true) {
             int foodX = ThreadLocalRandom.current().nextInt(0, 500);
+            int squareSize = 50;
+
             int realX = foodX - foodX % squareSize + (squareSize - SnakeFood.FOOD_SIZE) / 2;
             int foodY = ThreadLocalRandom.current().nextInt(0, 500);
             int realY = foodY - foodY % squareSize + (squareSize - SnakeFood.FOOD_SIZE) / 2;
             temp = new SnakeFood(realX, realY);
-            if (snake.intersects(temp)) continue;
-            else break;
+
+            if (snake.intersects(temp)) {
+                continue;
+            } else {
+                break;
+            }
         }
         foodItem = temp;
         drawables.add(foodItem);
     }
 
-    public int getPoints() {
-        return points;
+    private void renderDrawables(Graphics g) {
+        for (Drawable dObj : drawables) {
+            dObj.draw((Graphics2D) g);
+        }
     }
 }

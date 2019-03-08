@@ -7,17 +7,19 @@ import java.util.ArrayList;
 
 public class MenuScene implements Scene {
 
-    private ArrayList<JComponent> uiElements;
+    private final ArrayList<JComponent> uiElements;
     private String infoStr;
     private SceneState currState;
 
     public MenuScene() {
+        uiElements = new ArrayList<>();
         currState = SceneState.STATIC;
         infoStr = "";
         init();
     }
 
     public MenuScene(int points) {
+        uiElements = new ArrayList<>();
         currState = SceneState.STATIC;
         infoStr = "<html> GAME IS OVER. </br> YOUR SCORE IS " + points + "</html>";
         init();
@@ -25,15 +27,9 @@ public class MenuScene implements Scene {
 
     @Override
     public void init() {
-        initUI();
-    }
-
-    public void initUI() {
-        uiElements = new ArrayList<>();
-
-        JButton startButton = new JButton("START GAME");
-        JButton exitButton = new JButton("EXIT");
-        JLabel infoLabel = new JLabel(infoStr);
+        final JButton startButton = new JButton("START GAME");
+        final JButton exitButton = new JButton("EXIT");
+        final JLabel infoLabel = new JLabel(infoStr);
 
         infoLabel.setPreferredSize(new Dimension(200, 100));
         startButton.setPreferredSize(new Dimension(100, 50));
@@ -99,8 +95,9 @@ public class MenuScene implements Scene {
         uiElements.add(infoLabel);
     }
 
+
     @Override
-    public void addUiComponents(JComponent targetPanel) {
+    public void addUiComponents(final JComponent targetPanel) {
         targetPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.VERTICAL;
