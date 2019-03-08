@@ -17,4 +17,6 @@ public interface Scene {
     void actionPerformed();
 
     void addUiComponents(JComponent target);
+
+    SceneState getSceneState();
 }

@@ -12,7 +12,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GameScene implements Scene {
 
-
     private static final int PANEL_WIDTH = 500;
     private static final int PANEL_HEIGHT = 500;
 
@@ -109,6 +108,11 @@ public class GameScene implements Scene {
     @Override
     public void addUiComponents(JComponent target) {
 
+    }
+
+    @Override
+    public SceneState getSceneState() {
+        return currState;
     }
 
     private void drawObject(Graphics g, Drawable dObject) {
