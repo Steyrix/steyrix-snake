@@ -83,6 +83,11 @@ public class Snake implements Drawable, BoundingBoxed {
     }
 
     public void addBodyPart() {
+        if (stopped) {
+            posToAdd = new Point(bodyParts.getLast().getPosition().x,
+                    bodyParts.getLast().getPosition().y + SnakeBodyPart.PART_SIZE);
+        }
+        
         bodyParts.add(new SnakeBodyPart(posToAdd));
     }
 

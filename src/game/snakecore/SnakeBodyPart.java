@@ -11,18 +11,18 @@ public class SnakeBodyPart implements Drawable, BoundingBoxed {
     private int x;
     private int y;
 
-    public SnakeBodyPart (int x, int y){
+    public SnakeBodyPart(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public SnakeBodyPart (Point initPos){
+    public SnakeBodyPart(Point initPos) {
         this.x = initPos.x;
         this.y = initPos.y;
     }
 
     @Override
-    public void setPosition(Point newPos){
+    public void setPosition(Point newPos) {
         x = newPos.x;
         y = newPos.y;
     }
@@ -33,12 +33,12 @@ public class SnakeBodyPart implements Drawable, BoundingBoxed {
     }
 
     @Override
-    public int getWidth(){
+    public int getWidth() {
         return PART_SIZE;
     }
 
     @Override
-    public int getHeight(){
+    public int getHeight() {
         return PART_SIZE;
     }
 
@@ -50,7 +50,7 @@ public class SnakeBodyPart implements Drawable, BoundingBoxed {
     }
 
     @Override
-    public boolean isComposite(){
+    public boolean isComposite() {
         return false;
     }
 
