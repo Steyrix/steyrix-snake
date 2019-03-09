@@ -64,10 +64,13 @@ public class GameScene implements Scene {
             currState = SceneState.READY_TO_CHANGE;
         }
 
-        if (snake.getPosition().x >= PANEL_WIDTH
-                || snake.getPosition().x <= 0 - snake.getWidth()
-                || snake.getPosition().y >= PANEL_HEIGHT
-                || snake.getPosition().y <= 0 - snake.getHeight()) {
+        final boolean outOfBoundsX = snake.getPosition().x >= PANEL_WIDTH
+                || snake.getPosition().x <= 0 - snake.getWidth();
+
+        final boolean outOfBoundsY = snake.getPosition().y >= PANEL_HEIGHT
+                || snake.getPosition().y <= 0 - snake.getHeight();
+
+        if (outOfBoundsX || outOfBoundsY) {
             snake.setDeathClr();
             snake.stop();
             currState = SceneState.READY_TO_CHANGE;
@@ -115,13 +118,13 @@ public class GameScene implements Scene {
     public int getPoints() {
         return points;
     }
-    
+
     private void drawPlayField(Graphics g) {
 
         final int textPosX = 0;
         final int textPosY = 520;
 
-        Graphics2D g2d = (Graphics2D) g;
+        final Graphics2D g2d = (Graphics2D) g;
 
         g2d.setColor(Color.BLACK);
 
