@@ -44,11 +44,6 @@ public class SnakeFood implements Drawable, BoundingBoxed {
     }
 
     @Override
-    public boolean isComposite(){
-        return false;
-    }
-
-    @Override
     public void setPosition(Point newPos) {
         x = newPos.x;
         y = newPos.y;

@@ -50,11 +50,6 @@ public class SnakeBodyPart implements Drawable, BoundingBoxed {
     }
 
     @Override
-    public boolean isComposite() {
-        return false;
-    }
-
-    @Override
     public Point getPosition() {
         return new Point(x, y);
     }

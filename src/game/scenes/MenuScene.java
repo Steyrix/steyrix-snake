@@ -4,23 +4,27 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MenuScene implements Scene {
 
     private final ArrayList<JComponent> uiElements;
     private String infoStr;
     private SceneState currState;
+    private int points;
 
     public MenuScene() {
         uiElements = new ArrayList<>();
         currState = SceneState.STATIC;
         infoStr = "";
+        points = 0;
         init();
     }
 
-    public MenuScene(int points) {
+    public MenuScene(int pts) {
         uiElements = new ArrayList<>();
         currState = SceneState.STATIC;
+        points = pts;
         infoStr = "<html> GAME IS OVER. </br> YOUR SCORE IS " + points + "</html>";
         init();
     }
@@ -114,7 +118,6 @@ public class MenuScene implements Scene {
 
     @Override
     public void drawScene(Graphics g) {
-
     }
 
     @Override
@@ -134,5 +137,19 @@ public class MenuScene implements Scene {
     @Override
     public SceneState getSceneState() {
         return currState;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setLeaderboard(List<String> leaderScores) {
+        JList<String> list = new JList<>();
+        list.setListData(leaderScores.toArray(new String[0]));
+
+        JLabel label = new JLabel();
+        label.setText("TOP 10: ");
+        uiElements.add(label);
+        uiElements.add(list);
     }
 }

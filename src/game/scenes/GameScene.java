@@ -139,12 +139,12 @@ public class GameScene implements Scene {
     private void generateFood() {
         SnakeFood temp;
         while (true) {
-            int foodX = ThreadLocalRandom.current().nextInt(0, 500);
-            int squareSize = 50;
+            final int foodX = ThreadLocalRandom.current().nextInt(0, 500);
+            final int squareSize = 50;
 
-            int realX = foodX - foodX % squareSize + (squareSize - SnakeFood.FOOD_SIZE) / 2;
-            int foodY = ThreadLocalRandom.current().nextInt(0, 500);
-            int realY = foodY - foodY % squareSize + (squareSize - SnakeFood.FOOD_SIZE) / 2;
+            final int realX = foodX - foodX % squareSize + (squareSize - SnakeFood.FOOD_SIZE) / 2;
+            final int foodY = ThreadLocalRandom.current().nextInt(0, 500);
+            final int realY = foodY - foodY % squareSize + (squareSize - SnakeFood.FOOD_SIZE) / 2;
             temp = new SnakeFood(realX, realY);
 
             if (snake.intersects(temp)) {

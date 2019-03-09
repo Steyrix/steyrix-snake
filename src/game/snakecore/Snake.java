@@ -190,11 +190,6 @@ public class Snake implements Drawable, BoundingBoxed {
     }
 
     @Override
-    public boolean isComposite() {
-        return true;
-    }
-
-    @Override
     public void setPosition(Point newPos) {
         int diffX = getPosition().x - newPos.x;
         int diffY = getPosition().y - newPos.y;
